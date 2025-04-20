@@ -1,16 +1,17 @@
 #!/bin/bash
 
-# Always run from the project root
 cd "$(dirname "$0")/.."
 
-# Load NVM so pm2 is in path
 export NVM_DIR="$HOME/.nvm"
 source "$NVM_DIR/nvm.sh"
+
+echo "📦 Installing dependencies..."
+npm install
 
 echo "🔄 Building API..."
 npm run build
 
-echo "🚀 Restarting API with PM2..."
+echo "🚀 Restarting API..."
 pm2 restart home-tech-lab-api
 
 echo "✅ API deployed successfully."
