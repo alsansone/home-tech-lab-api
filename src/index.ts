@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { body, validationResult } from 'express-validator';
+import { body, validationResult } from "express-validator";
 import cors from "cors";
 import dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
@@ -8,7 +8,7 @@ dotenv.config();
 
 const app = express();
 const prisma = new PrismaClient();
-const PORT = process.env.PORT || 4000;
+const PORT = 4000;
 
 app.use(cors());
 app.use(express.json());
@@ -18,13 +18,13 @@ const getChores = async (req: Request, res: Response) => {
     orderBy: { createdAt: "desc" },
   });
   res.json(chores);
-}
+};
 
 // GET /chores
-app.get("/chores", getChores);
+app.get("/api/chores", getChores);
 
 const choreValidationRules = [
-  body('title').notEmpty().withMessage('Title is required'),
+  body("title").notEmpty().withMessage("Title is required"),
 ];
 
 const addChore = async (req: Request, res: Response) => {
@@ -53,12 +53,12 @@ const addChore = async (req: Request, res: Response) => {
     console.error("Error in /test route:", error);
     res.status(500).json({ error: "Something went wrong." });
   }
-}
+};
 
 // POST /chores
-app.post("/chores", choreValidationRules, addChore);
+app.post("/api/chores", choreValidationRules, addChore);
 
 // Start server after all routes are defined
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
 });
